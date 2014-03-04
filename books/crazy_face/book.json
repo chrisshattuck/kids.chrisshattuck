@@ -1,0 +1,38 @@
+{
+  "background": "bg.jpg",
+  "pages": {
+    "1": {
+      "image": "1.jpg",
+      "sentences": {
+        "1": "Once upon a time there was a kid with a very crazy face."
+      }
+    },
+    "2": {
+      "image": "2.jpg",
+      "sentences": {
+        "2": "A bug came to him one day and said 'why do you have such a crazy face?'"
+      }
+    },
+    "3": {
+      "image": "3.jpg",
+      "sentences": {
+        "3": "The kid said 'I do not know.",
+        "4": "I just like crazy things.'"
+      }
+    },
+    "4": {
+      "image": "4.jpg",
+      "sentences": {
+        "5": "The bug said 'Me too.",
+        "6": "I like your face.",
+        "7": "Have a good day!'"
+      }
+    },
+    "5": {
+      "image": "5.jpg",
+      "sentences": {
+        "8": "The kid said 'I will, you too!'"
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "background": "bg.jpg",
+  "pages": {
+    "1": {
+      "image": "1.jpg",
+      "sentences": {
+        "1": "Once there were two children."
+      }
+    },
+    "2": {
+      "image": "2.jpg",
+      "sentences": {
+        "2": "They got stuck in a hole."
+      }
+    },
+    "3": {
+      "image": "3.jpg",
+      "sentences": {
+        "3": "A tiger climbed into the hole."
+      }
+    },
+    "4": {
+      "image": "4.jpg",
+      "sentences": {
+        "4": "The children climbed out and ran to their homes as fast as they could."
+      }
+    },
+    "5": {
+      "image": "5.jpg",
+      "sentences": {
+        "5": "The tiger was trapped."
+      }
+    },
+    "6": {
+      "image": "6.jpg",
+      "sentences": {
+        "6": "The end!"
+      }
+    }
+  }
+}

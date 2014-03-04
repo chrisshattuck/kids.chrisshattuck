@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>howler.js example</title>
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js" data-semver="2.0.3" data-require="jquery@*"></script>
+  <script src="/books/bower_components/spin.js/spin.js"></script>
+  <script src="/books/bower_components/spin.js/jquery.spin.js"></script>
+  <link rel="stylesheet" href="stylesheets/styles.css" />
+  <link rel="stylesheet" href="fontastic/styles.css" />
+  <script>
+    
+    $(document).ready(function () {
+      
+      $('#book-text-submit').click(function () {
+        var text = $('#book-text').val();
+        var pages = text.split("\n");
+        var not_recorded = [];
+        var recorded = [];
+        var sentence_i = 1;
+        var page_i = 1;
+        var pages_object = {};
+        
+        $('#recorded').html('');
+        $('#not-recorded').html('');
+        
+        $.each(pages, function(key, page_text) {
+          console.log('doing page');
+          var sentences = page_text.match( /[^\.!\?]+[\.!\?]+/g );
+          var sentences_object = {};
+          $.each(sentences, function(key, sentence) {
+            sentences_object[sentence_i + ''] = sentence.trim();
+            sentence_i++;
+          });
+          pages_object[page_i + ''] = {"image": page_i + '.jpg', 'sentences': sentences_object};
+          page_i++;
+          var words = page_text.split(" ");
+          $.each(words, function(key, word) {
+            word = word.replace(/[\u2018\u2019\u201C\u201D?\.,-\/#рс"'!$%\^&\*;:{}=\-_`~()]/g,"");
+            word = word.toLowerCase();
+            $.ajax({
+              url:'/books/audio/words/' + word + '.mp3',
+              error: function()
+              {
+                if ($.inArray(word, not_recorded) == -1) {
+                  $('#not-recorded').append('<div>' + word + '</div>');
+                  not_recorded.push(word);
+                }
+              },
+              success: function()
+              {
+                if ($.inArray(word, recorded) == -1) {
+                  $('#recorded').append('<div>' + word + '</div>');
+                  recorded.push(word);
+                }
+              }
+            });
+          });
+        }); // End each
+        
+        var book_object = {"background":"bg.jpg", "pages": pages_object};
+        console.log(book_object);
+        var myJSONText = JSON.stringify(book_object);
+        $('#book-json').val(myJSONText);
+      });
+      
+    });
+  </script>
+</head>
+<body>
+  
+  <textarea id="book-text"></textarea>
+  
+  <button id="book-text-submit">Get unique words and json</button>
+  <div id="status">
+    <textarea id="book-json"></textarea>
+    <div><strong>Not recorded:</strong></div>
+    <div id="not-recorded"></div>
+    <div><strong>Recorded:</strong></div>
+    <div id="recorded"></div>
+  </div>
+</body>
+</html>

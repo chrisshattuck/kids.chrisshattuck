@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>howler.js example</title>
+  <script src="http://code.jquery.com/jquery-2.0.3.min.js" data-semver="2.0.3" data-require="jquery@*"></script>
+  <script src="/books/bower_components/spin.js/spin.js"></script>
+  <script src="/books/bower_components/spin.js/jquery.spin.js"></script>
+  <link rel="stylesheet" href="stylesheets/styles.css" />
+  <link rel="stylesheet" href="fontastic/styles.css" />
+</head>
+<body>
+  <script src="/books/bower_components/howler/howler.js"></script>
+  <script>
+      var books_model = {
+        book_data: {},
+        page_num: 1,
+        page_count: 0,
+        sentence_num: 1,
+        suppress_letters: false,
+        suppress_words: false,
+        book_name: 'the_mall',
+        howl: new Howl({urls: ['/books/audio/letter_names/t.mp3']}),
+        book_list: ['the_mall', 'crazy_face', 'tiger_hole']
+      };
+      
+      
+      
+      
+      function loadBook(directory) {
+        $.getJSON( "/books/books/" + directory + "/book.json", function( data ) {
+          books_model.book_data = data;
+          books_model.page_count = countProperties(books_model.book_data.pages);
+          loadPage(books_model.page_num);
+          if (books_model.page_count > 1) {
+            $('#next').show();
+          } else {
+            $('#next').hide();
+          }
+          if (books_model.book_data.background) {
+            $('body').css('background-image', 'url("/books/books/' + books_model.book_name + '/images/' + books_model.book_data.background + '")');
+          }
+        });
+      }
+      
+      $(document).ready(function () {
+        console.log('loaded');
+        loadBookListing();
+        
+        makeSound('pick-a-book-to-read');
+        
+        $('#play-text').click(function () {
+          playSentence(books_model.sentence_num);
+        });
+        
+        $('#next').click(function () {
+          books_model.howl.stop();
+          books_model.page_num++;
+          if (books_model.page_count <= books_model.page_num) {
+            $('#next').hide();
+          }
+          $('#prev').show();
+          loadPage(books_model.page_num);
+        });
+        
+        $('#prev').click(function () {
+          books_model.howl.stop();
+          books_model.page_num--;
+          if (books_model.page_count > books_model.page_num) {
+            $('#next').show();
+          } else {
+            $('#next').hide();
+          }
+          if (books_model.page_num == 1) {
+            $('#prev').hide();
+          }
+          loadPage(books_model.page_num);
+        });
+        
+        $('[data-cover]').click(function () {
+          books_model.page_num = 1;
+          books_model.book_name = $(this).attr('data-cover');
+          loadBook(books_model.book_name);
+          $('#books').slideUp();
+          $('#book-wrapper').fadeIn();
+          books_model.howl.stop();
+          books_model.howl = new Howl({
+            urls: ['/books/books/' + books_model.book_name + '/sentences/title.mp3']
+          });
+          books_model.howl.play();
+        });
+        
+        $('#book-bar').click(function () {
+          $('#books').slideToggle();
+        });
+        
+        $('#book-bar').hover(function () {
+          makeSound('show-the-books');
+        }, function () {});
+        
+      });
+      
+      function makeSound(sound) {
+        books_model.howl.stop();
+        books_model.howl = new Howl({
+          urls: ['/books/audio/sounds/' + sound + '.mp3']
+        });
+        books_model.howl.play();
+      }
+      
+      function countProperties(obj) {
+        var count = 0;
+    
+        for(var prop in obj) {
+          if(obj.hasOwnProperty(prop))
+            ++count;
+        }
+    
+        return count;
+      }
+      
+      function loadPage(page_num) {
+        var page_data = books_model.book_data.pages[page_num];
+        if (page_data.image) {
+          $('#book-image').html('<img src="/books/books/' + books_model.book_name + '/images/' + page_data.image + '" />');
+        }
+        var page_text = '';
+        $.each(page_data.sentences, function( sentence_id, val ) {
+          words = val.split(' ');
+          var sentence_output = '';
+          $.each(words, function(key, word) {
+            var letters = word.split('');
+            var word_output = '';
+            $.each(letters, function(key, letter) {
+              word_output += '<span class="l" data-l>' + letter + '</span>';
+            });
+            sentence_output += '<span class="w" data-w="' + removePunctuation(word) + '">' + word_output + '</span> ';
+          });
+          page_text += '<span class="s" data-s="' + sentence_id + '">' + sentence_output + '</span>';
+        });
+        $('#book-text').html(page_text);
+        books_model.sentence_num = $('[data-s]').attr('data-s');
+        soundify_page();
+      }
+      
+      function playSentence(num) {
+        books_model.suppress_letters = true;
+        books_model.suppress_words = true;
+        books_model.howl.stop();
+        $('[data-s="' + num + '"]').spin();
+        books_model.howl = new Howl({
+          urls: ['/books/books/' + books_model.book_name + '/sentences/' + books_model.sentence_num + '.mp3'],
+          onload: function () {
+            $('[data-s="' + num + '"]').spin(false);
+          },
+          onend: function() {
+            books_model.sentence_num++;
+            if ($('[data-s="' + books_model.sentence_num + '"]').length > 0) {
+              playSentence(books_model.sentence_num);
+            } else {
+              books_model.sentence_num = $('[data-s]').attr('data-s');
+              $('.highlighted').removeClass('highlighted');
+              books_model.suppress_letters = false;
+              books_model.suppress_words = false;
+              return;
+            }
+          }
+        });
+        $('.highlighted').removeClass('highlighted');
+        $('[data-s="' + num + '"]').addClass('highlighted');
+        books_model.howl.play();
+      }
+      
+      function soundify_page() {
+        $('[data-l]').click(function () {
+          if (books_model.suppress_letters) {
+            return;
+          }
+          $('.highlighted').removeClass('highlighted');
+          $(this).addClass('highlighted');
+          console.log('clicked');
+          var letter = $(this).text().toLowerCase();
+          books_model.howl.stop();
+          books_model.howl = new Howl({
+            urls: ['/books/audio/letter_names/' + letter + '.mp3'],
+            onend: function() {
+              $('.highlighted').removeClass('highlighted');
+            }
+          });
+          books_model.howl.play();
+        });
+        $('[data-w]').hover(function () {
+          if (books_model.suppress_words) {
+            return;
+          }
+          books_model.howl.stop();
+          var word = $(this).attr('data-w');
+          books_model.howl = new Howl({
+            urls: ['/books/audio/words/' + word + '.mp3']
+          });
+          console.log(word);
+          books_model.howl.play();
+          $('.highlighted').removeClass('highlighted');
+          $(this).addClass('highlighted');
+        }, function () {
+          $('.highlighted').removeClass('highlighted');
+        });
+      }
+      
+      function removePunctuation(str) {
+        str = str.replace(/[\u2018\u2019\u201C\u201D?\.,-\/#рс"'!$%\^&\*;:{}=\-_`~()]/g,"");
+        str = str.toLowerCase();
+        return str;
+      }
+      
+      function loadBookListing() {
+        var output = '';
+        $.each(books_model.book_list, function(key, directory) {
+          console.log('Dir', directory);
+          output += '<img data-cover="' + directory + '" class="cover-image" src="/books/books/' + directory + '/images/cover.jpg" /> ';
+        });
+        $('#books').html(output);
+      }
+  </script>
+  <div data-icon="a" id="book-bar"></div>
+  <div id="books"></div>
+  <div id="book-wrapper">
+    <div id="book-left">
+      <div id="book-image"></div>
+    </div>
+    <div id="book-right">
+      <div id="book-text"></div>
+      <div data-icon="b" id="prev" style="display:none"></div>
+      <div data-icon="n" id="next" style="display:none"></div>
+      <div data-icon="p" id="play-text"></div>
+    </div>
+  </div>
+  
+</body>
+</html>

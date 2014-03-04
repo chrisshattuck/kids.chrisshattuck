@@ -1,0 +1,37 @@
+{
+  "background": "bg.jpg",
+  "pages": {
+    "1": {
+      "image": "1.jpg",
+      "sentences": {
+        "1": "Haven and Lowen went to the mall."
+      }
+    },
+    "2": {
+      "image": "2.jpg",
+      "sentences": {
+        "2": "They had some quarters."
+      }
+    },
+    "3": {
+      "image": "3.jpg",
+      "sentences": {
+        "3": "They bought some bubble gum."
+      }
+    },
+    "4": {
+      "image": "4.jpg",
+      "sentences": {
+        "4": "Haven shared his gum with Lowen.",
+        "5": "Lowen shared his gum with Haven."
+      }
+    },
+    "5": {
+      "image": "5.jpg",
+      "sentences": {
+        "6": "They were happy!",
+        "7": "The end."
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "pages": {
+    "1": {
+      "sentences": {
+        "1": "Stomp your feet!",
+        "2": "Clap your hands!",
+        "3": "Everybody ready for a BARNYARD DANCE!"
+      }
+    },
+    "2": {
+      "sentences": {
+        "3": "Bow to the horse.",
+        "4": "Bow to the cow."
+      }
+    },
+    "3": {
+      "sentences": {
+        "5": "Twirl with the pig if you know how."
+      }
+    },
+    "4": {
+      "sentences": {
+        "6": "Bounce with the bunny.",
+        "7": "Strut with the duck."
+      }
+    },
+    "5": {
+      "sentences": {
+        "8": "Spin with the chickens now - ",
+        "9": "CLUCK CLUCK CLUCK!"
+      }
+    }
+  }
+}

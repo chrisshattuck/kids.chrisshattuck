@@ -1,0 +1,86 @@
+@import "compass/css3";
+
+$spacer:20px;
+$green: #57bc13;
+
+#book-text {
+  font-size: 44px;
+  font-family: sans-serif;
+  margin: $spacer;
+  margin-bottom: $spacer*2;
+}
+#book-text span {
+  display: inline-block;
+}
+.s, .w, .l {
+  position: relative;
+  padding:1px;
+  cursor: pointer;
+}
+.highlighted {
+  background: #bc1357;
+  color:white;
+  top:-2px;
+  padding-bottom: 2px;
+  @include border-radius(3px);
+}
+#book-wrapper {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $spacer;
+  text-align: center;
+  background: white;
+  @include border-radius(10px);
+  display: none;
+}
+#play-text, #next, #prev {
+  cursor: pointer;
+  color: $green;
+}
+#play-text {
+  font-size: 100px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#next, #prev {
+  font-size: 70px;
+  margin-top: 10px;
+}
+#next {
+  float: right;
+}
+#prev {
+  float: left;
+  font-size: 60px;
+}
+.cover-image {
+  width: 250px;
+  cursor: pointer;
+}
+#book-bar {
+  font-size: 40px;
+  background: #333;
+  color:white;
+  padding: $spacer/2;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 2px solid white;
+  position: absolute;
+  top:0px;
+  left:0px;
+  
+}
+#books {
+  padding: $spacer;
+  background: #d5c00e;
+}
+#book-left {
+  float: left;
+  width:45%;
+}
+#book-right {
+  float: right;
+  width: 45%;
+}

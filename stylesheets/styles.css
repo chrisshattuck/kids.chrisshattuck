@@ -1,0 +1,117 @@
+/* line 6, ../sass/styles.scss */
+#book-text {
+  font-size: 44px;
+  font-family: sans-serif;
+  margin: 20px;
+  margin-bottom: 40px;
+}
+
+/* line 12, ../sass/styles.scss */
+#book-text span {
+  display: inline-block;
+}
+
+/* line 15, ../sass/styles.scss */
+.s, .w, .l {
+  position: relative;
+  padding: 1px;
+  cursor: pointer;
+}
+
+/* line 20, ../sass/styles.scss */
+.highlighted {
+  background: #bc1357;
+  color: white;
+  top: -2px;
+  padding-bottom: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 27, ../sass/styles.scss */
+#book-wrapper {
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  text-align: center;
+  background: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  display: none;
+}
+
+/* line 37, ../sass/styles.scss */
+#play-text, #next, #prev {
+  cursor: pointer;
+  color: #57bc13;
+}
+
+/* line 41, ../sass/styles.scss */
+#play-text {
+  font-size: 100px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 47, ../sass/styles.scss */
+#next, #prev {
+  font-size: 70px;
+  margin-top: 10px;
+}
+
+/* line 51, ../sass/styles.scss */
+#next {
+  float: right;
+}
+
+/* line 54, ../sass/styles.scss */
+#prev {
+  float: left;
+  font-size: 60px;
+}
+
+/* line 58, ../sass/styles.scss */
+.cover-image {
+  width: 250px;
+  cursor: pointer;
+}
+
+/* line 62, ../sass/styles.scss */
+#book-bar {
+  font-size: 40px;
+  background: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 2px solid white;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+/* line 75, ../sass/styles.scss */
+#books {
+  padding: 20px;
+  background: #d5c00e;
+}
+
+/* line 79, ../sass/styles.scss */
+#book-left {
+  float: left;
+  width: 45%;
+}
+
+/* line 83, ../sass/styles.scss */
+#book-right {
+  float: right;
+  width: 45%;
+}
